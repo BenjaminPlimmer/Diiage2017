@@ -1,4 +1,0 @@
-#Nicolas.G
-#!/bin/bash
-#Afficher les processus sous forme d'arborescence, trier par PID, avec les arguments de commande.
-pstree -hapsun
