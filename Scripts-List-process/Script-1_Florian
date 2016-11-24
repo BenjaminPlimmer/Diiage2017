@@ -1,0 +1,15 @@
+Exercice n°1 :script qui liste les proccessus et leurs enfants
+
+#!/bin/bash
+
+pstree -ha
+
+exit
+
+# -a : Afficher les arguments de la ligne de commande. Si la ligne de commande correspond à un processus 
+# endormi en zone de swap, ce processus est affiché entre parenthèses. 
+# L'option -a désactive implicitement le compactage des branches.
+
+# -h Mettre en évidence (Ndt : highlight) le processus courant et ces ancètres. 
+# Cela devient une non opération si le terminal ne gère pas la mise en évidence ou si ni le processus courant,
+# ni l'un de ces ancètres ne se trouvent dans le sous-arbre à afficher.
