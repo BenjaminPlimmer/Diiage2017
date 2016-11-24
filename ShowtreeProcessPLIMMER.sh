@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#author: Benjamin PLIMMER
 #Show all process and their children
 
 
