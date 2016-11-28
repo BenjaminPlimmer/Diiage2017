@@ -1,8 +1,8 @@
 #!/bin/bash
-#@AIM :       Voici un script qui liste les processus et leurs enfants.
-#@AUTHORS : MERLE Florian
-#@PARAMS :    Pas de paramètres
-#@MODIFS :    Ajout d'une entête standard
+#@AIM     :       Voici un script qui liste les processus et leurs enfants.
+#@AUTHORS :   Florian MERLE
+#@PARAMS  :    Pas de paramètres
+#@MODIFS  :    Ajout d'une entête standard
 
 pstree -ha    #pstree : affiche un arbre des processus
               #-a : Afficher les arguments de la ligne de commande. Si la ligne de commande correspond à un processus
