@@ -1,1 +1,8 @@
-pstree -G
+#!/bin/bash
+# AIM : Afficher les processus et leurs enfants.
+# Author(s) : BARUET Kevin
+# PARAMS :
+# MODIFS :
+
+pstree -cG
+
