@@ -15,11 +15,11 @@ Function EnfantsPèreAbsolu {
    For i in $( find /proc -maxdepth 1 -type d -regex ".*[1-9]" ) 
    Do
 	  #stocke dans une variable le nom du processus
-      $Pname = grep "Name" /proc/$i/status | awk -F ":" { print $2 } 
+          Pname = grep "Name" /proc/$i/status | awk -F ":" { print $2 } 
 	  #stocke dans une variable le PPID du processus
-	  $PPID = grep "PPID" /proc/$i/status | awk -F ":" { print $2 }
+	  PPID = grep "PPID" /proc/$i/status | awk -F ":" { print $2 }
 	  #stocke dans une variable le PID du processus
-	  $PID = grep "PID" /proc/$i/status | awk -F ":" { print $2 }   
+	  PID = grep "PID" /proc/$i/status | awk -F ":" { print $2 }   
 	  
 	  #Test condition , si le processus a un PPID égal à 1 autrement dit égal
 	  # au PID du processus Père absolu 
