@@ -1,5 +1,5 @@
 #!/bin/bash
-#@AIM : Afficher les processus sous forme d'arborescence, trier par PID, avec les arguments de commande.
+#@AIM : Afficher les processus et leurs enfants sous forme d'arborescence, trier par PID, avec les arguments de commande.
 #@AUTHORS :
 #   - GOURILLON Nicolas
 #@PARAMS :
