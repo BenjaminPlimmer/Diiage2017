@@ -1,6 +1,6 @@
 #!/bin/bash
 #@AIM :       Voici un script qui liste les processus et leurs enfants.
-#@Author(s) : MERLE Florian
+#@AUTHORS : MERLE Florian
 #@PARAMS :    Pas de paramètres
 #@MODIFS :    Ajout d'une entête standard
 
