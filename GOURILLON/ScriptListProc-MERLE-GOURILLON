@@ -44,3 +44,4 @@ function subtree
                 fi
         done < listproc
 }
+subtree 1
