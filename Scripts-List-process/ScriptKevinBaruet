@@ -1,8 +1,8 @@
 #!/bin/bash
-# AIM : Afficher les processus et leurs enfants.
-# AUTHORS : BARUET KEVIN
-# PARAMS : Pas de paramètres
-# MODIFS : Ajout de l'entête standard
+# AIM     : Afficher les processus et leurs enfants.
+# AUTHORS : KEVIN BARUET
+# PARAMS  : Pas de paramètres
+# MODIFS  : Ajout de l'entête standard
 
 pstree -cG
 
