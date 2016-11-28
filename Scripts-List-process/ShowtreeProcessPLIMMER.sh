@@ -1,6 +1,7 @@
 #!/bin/bash
-#author: Benjamin PLIMMER
-#Show all process and their children
+#AIM: Show all process and their children
+#AUTHOR: Benjamin PLIMMER
+#PARAMS:
 
 
 if command -v pstreee >/dev/null
