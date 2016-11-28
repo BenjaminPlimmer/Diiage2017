@@ -14,18 +14,26 @@
 Function EnfantsPèreAbsolu {
    For i in $( find /proc -maxdepth 1 -type d -regex ".*[1-9]" ) 
    Do
-      $Pname = grep "Name" /proc/$i/status | awk -F ":" { print $2 } #stocke dans une variable le nom du processus
-	  $PPID = grep "PPID" /proc/$i/status | awk -F ":" { print $2 }  #stocke dans une variable le PPID du processus
-	  $PID = grep "PID" /proc/$i/status | awk -F ":" { print $2 }   #stocke dans une variable le PID du processus
+	  #stocke dans une variable le nom du processus
+      $Pname = grep "Name" /proc/$i/status | awk -F ":" { print $2 } 
+	  #stocke dans une variable le PPID du processus
+	  $PPID = grep "PPID" /proc/$i/status | awk -F ":" { print $2 }
+	  #stocke dans une variable le PID du processus
+	  $PID = grep "PID" /proc/$i/status | awk -F ":" { print $2 }   
 	  
-	  #
-	  If [[$PID = 1 ]]
+	  #Test condition , si le processus a un PPID égal à 1 autrement dit égal
+	  # au PID du processus Père absolu 
+	  If [[$PPID = 1 ]]
 	  then
-		echo "\--- $Pname ( $PID )"
-	  
+		# alors afficher le nom du processus et son PID en décalé sur l'affichage
+		echo "\--- $Pname ( $PID )" 
 	  else
-		echo " $Pname ( $PID ) "
+	  # sinon afficher le nom du processus et son PID sans le décaler sur 
+	  # l'affichage
+		echo " $Pname ( $PID ) " 
 	  fi
    Done
 
 }
+
+ 
