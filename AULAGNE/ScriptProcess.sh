@@ -7,10 +7,10 @@
 #PARAMS : 
 #MODIF :
 
-#Fonction qui recherche parmis les processus présent dans "/proc" , et affiche
-# les processus Parents ou enfants en fonction du processus père absolu 
-# "systemd"
-
+#AIM : Fonction qui recherche parmis les processus présent dans "/proc" , et 
+# affiche les processus Parents ou enfants en fonction du processus père  
+# absolu "systemd"
+#PARAMS : 
 Function EnfantsPèreAbsolu {
    For i in $( find /proc -maxdepth 1 -type d -regex ".*[1-9]" ) 
    Do
