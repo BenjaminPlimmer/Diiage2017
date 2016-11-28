@@ -44,3 +44,4 @@ function subtree
         done < listproc
 }
 subtree 1
+rm /root/listproc
