@@ -1,15 +1,15 @@
 #!/bin/bash
 # AIM: script listant les processus ainsi que leurs enfants
-# AUTHORS: Jérémy BERNARD
-#PARAMS: aucun paramètre
+# AUTHORS: JÃ©rÃ©my BERNARD
+#PARAMS: aucun paramÃ¨tre
 #MODIF:
 
 #recherche des processus en utilisant une bouche for
 for P in $(seq 1 32618); do
    [ -d "/proc/$P" ] || continue
-   echo "$P: $(cat /proc/$P/cmdline 2>/dev/null |sed 's/\x00/ /g')"
+   echo "$P: $(cat /proc/$P/cmdline 2>/dev/null)"
 # recherche des PPID par processus
    grep -E PPid /proc/$P/status
 # Mettre en place l'arborescence des processus en joignant les PPID avec les PID
-# Je n'ai pas trouvé la syntaxe pour le faire
+# Je n'ai pas trouvÃ© la syntaxe pour le faire
 done
