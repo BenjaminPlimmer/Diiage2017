@@ -1,7 +1,7 @@
 #!/bin/sh
 #AIM : Récupération de la liste des processus sous forme d'arborescence, en ajoutant le lien de parenté Parent/Enfant et en spécifiant le l'ID de processus et l'utilisateur qui a lançé le processus
 #AUTHORS :   
-#   -AULAGNE Jérôme
+#   -Jérôme AULAGNE
 #PARAMS : 
 #MODIF :
 
