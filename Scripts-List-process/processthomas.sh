@@ -5,7 +5,7 @@
 #@MODIFS	:
 
 #VÃ©rifie que l'appel du script contient un argument
-if [ $# -eq 0 ]
+if [[ $# -eq 0 ]]
 then
 	print "le paramÃ¨tre doit Ãªtre le numÃ©ro de processus"
 	pstree -p
