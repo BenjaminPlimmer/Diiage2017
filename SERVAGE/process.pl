@@ -108,7 +108,7 @@ subtree (1);
 print "Rentrez le PID pour supprimer le processus : \n";
 my $Saisie = <STDIN>;
 
-kill $Saisie ;
+`kill $Saisie` ;
 
 print "le processus avec comme PID $Saisie est tué \n";
 
