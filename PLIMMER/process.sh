@@ -3,37 +3,39 @@
 #@AUTHORS : Benjamin PLIMMER
 #@PARAMS : None
 
-FILE=$(ls /proc/ | grep "[0-9]")
-
-# Save pid and ppids in file /tmp/info
-for f in $FILE; do
-   NAME=$(more /proc/$i/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
-   IDP=$(more /proc/$i/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'}) 
-   echo "$f:$IDP" >> /tmp/info
-done
-
-currentlevel=0
-
-#AIM : Show tree from file (parent;enfant) || Stolen from internet
-#PARAMS : [INT] PID racine
-function subtree
+#AIM : Show tree from file (parent;enfant;name) 
+#PARAMS : [INT] PID 
+function CreateTree
 {
-   while IFS=":" read enfant parent
-   do
-      if [ "$parent" == "$1" ] 
-      then
-         for (( i=0; i<$currentlevel; i++ ))
-         do
-            echo -e -n "|      "
-         done
-         echo -e "└------$enfant"
-	 currentlevel=$((currentlevel+1))
-	 subtree $enfant
-	 currentlevel=$((currentlevel-1))
-      fi
-   done < /tmp/info
+	while IFS=":" read Enfant Parent Name
+	do
+		if [ "$Parent" == "$1" ] 
+		then
+			for (( i=0; i<$CurrentLevel; i++ ))
+			do
+				echo -e -n "|      "
+			done
+			echo -e "└------$Enfant($Name)"
+			CurrentLevel=$((CurrentLevel+1))
+			CreateTree $Enfant
+			CurrentLevel=$((CurrentLevel-1))
+		fi
+	done < /tmp/info
 }
 
-subtree 1
+File=$(ls /proc/ | grep "[0-9]")
+
+#Save pid, ppid and name in file /tmp/info
+#File format pid:ppid:name
+for f in $File
+do
+	Name=$(more /proc/$f/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
+	IdParent=$(more /proc/$f/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'})
+	echo "$f:$IdParent:$Name" >> /tmp/info
+done
+
+CurrentLevel=0
+
+CreateTree 0
 
 rm /tmp/info
