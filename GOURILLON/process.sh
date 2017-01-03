@@ -10,19 +10,6 @@
 #12/2016 - Changement de la mise en forme
 #01/2017 - Modification affichage arbre
 
-# Pour chacun des élements dans /proc analyser chacun des nom de 0 à 9
-for i in $(ls /proc | grep '[0-9]$')
-   do
-                #Conserver valeur PPID, PID, et Name du PID
-        pid=$(grep -w "Pid:" /proc/$i/status  2>/dev/null | awk -F " " '{print $2}')
-        ppid=$(grep -w "PPid:" /proc/$i/status 2>/dev/null | awk -F " " '{print $2}')
-        name=$(grep -w "Name:" /proc/$i/status 2>/dev/null| awk -F " " '{print $2}')
-        echo $i';'$ppid';'$name >>/tmp/listproc
-done
-
-
-currentlevel=0
-#root='1'
 function subtree
 {
         # Affiche un arbre à partir du noeud passé en argument
@@ -43,6 +30,19 @@ function subtree
                 fi
         done < /tmp/listproc
 }
+
+# Pour chacun des élements dans /proc analyser chacun des nom de 0 à 9
+for i in $(ls /proc | grep '[0-9]$')
+   do
+                #Conserver valeur PPID, PID, et Name du PID
+        pid=$(grep -w "Pid:" /proc/$i/status  2>/dev/null | awk -F " " '{print $2}')
+        ppid=$(grep -w "PPid:" /proc/$i/status 2>/dev/null | awk -F " " '{print $2}')
+        name=$(grep -w "Name:" /proc/$i/status 2>/dev/null| awk -F " " '{print $2}')
+        echo $i';'$ppid';'$name >>/tmp/listproc
+done
+currentlevel=0
+#root='1'
+
 subtree 0
 rm /tmp/listproc
 
@@ -54,7 +54,5 @@ then
         echo "Sortie du script"
         exit
 else
-
 kill -9 $kill
 fi
-
