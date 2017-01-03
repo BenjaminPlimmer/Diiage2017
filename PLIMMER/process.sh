@@ -3,7 +3,7 @@
 #@AUTHORS : Benjamin PLIMMER
 #@PARAMS : None
 
-#AIM : Show tree from file (parent;enfant;name) 
+#AIM : Show tree from file (parent:enfant:name) 
 #PARAMS : [INT] PID 
 function CreateTree
 {
@@ -23,8 +23,8 @@ function CreateTree
 	done < /tmp/info
 }
 
-#AIM : Show tree from file (parent;enfant;name) 
-#PARAMS : [INT] PID 
+#AIM : Show all process and their children
+#PARAMS : none
 function GetTree
 {
 	File=$(ls /proc/ | grep "[0-9]")
@@ -48,20 +48,23 @@ function GetTree
 GetTree
 
 Exit=0
+
+#kill process
 while [[ $Exit != 1 ]]
 do
-    read -p "Enter process ID to kill ? : enter to exit" id
-	echo 
+    read -p "Enter process ID to kill ? : press enter to exit" id
+	#check if input is empty
 	if [[ -z "$id" ]]
 	then
 		Exit=1
 	else
+		#check if id exist
 		if [ -d "/proc/$id" ]
 		then
 			kill $id
 			GetTree
 		else
-			echo "id unknown"
+			echo "$id unknown"
 		fi
 	fi
     
