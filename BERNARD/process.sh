@@ -11,9 +11,9 @@ list=$(ls /proc/ | grep "[0-9]")
 #Stockage dans des variables du nom, du PPID et du PID
 
 for l in $list; do
-   name=$(more /proc/$l/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'})
-   ppid=$(more /proc/$l/status 2>/dev/null | grep "PPid" | awk -F " " {'print $2'})
-   pid=$(more /proc/$l/status 2>/dev/null | grep "Pid" | awk -F " " {'print $2'})
+   name=$(/proc/$l/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'})
+   ppid=$(/proc/$l/status 2>/dev/null | grep "PPid" | awk -F " " {'print $2'})
+   pid=$(/proc/$l/status 2>/dev/null | grep "Pid" | awk -F " " {'print $2'})
    echo $pid';'$name';'$ppid >>/tmp/process
 done
 
