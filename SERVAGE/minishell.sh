@@ -4,8 +4,7 @@
 #@PARAMS :
 #@MODIFS :
 read -p "saisir une commande :" Commande
-exec $Commande
-echo ${?}
+exec $Commande | echo ${?}
 exit 0
 
 
