@@ -53,4 +53,10 @@ else
 kill -9 $kill
 fi
 
+#while [ $kill -ne "stop" ]
+#   do
+#     kill -9 $kill
+#     read kill
+#   done
+
 
