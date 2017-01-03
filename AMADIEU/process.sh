@@ -4,28 +4,16 @@
 #@PARAMS : None
 #@MODIF : None
 
-LIST=$(ls /proc/ | grep "[0-9]")
-
-# Parcours la liste de processus dans /proc et stocke le PID, le nom 
-# et le PPID dans des variables.
-for i in $LIST; do
-    NAME=$(more /proc/$i/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
-    IDP=$(more /proc/$i/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'})
-    PID=$(more /proc/$i/status 2>/dev/null | grep -e "^Pid" |awk -F " " {'print $2'}) 
-    echo "$PID:$IDP:$NAME" >> /tmp/list.csv
-done
-
-#AIM : Fonction permettant de faire un arborescence recursive des processus
-#      et processus enfant à partir d'un fichier formaté
-#      format du fichier : "PID:PPID"
-#PARAMS : int[FIRST PID] 
-#RETURN : None
 currentlevel=0
 
 # Fix le début de l'arborescence à 1
 root='1'
 echo $root
-# Affiche un arbre à partir du noeud passé en argument
+#AIM : Fonction permettant de faire un arborescence recursive des processus
+#      et processus enfant à partir d'un fichier formaté
+#      format du fichier : "PID:PPID"
+#PARAMS : int[FIRST PID] 
+#RETURN : None
 function subtree ()
 {
     while IFS=":" read enfant parent name
@@ -42,6 +30,18 @@ function subtree ()
     done < /tmp/list.csv
 }
 
+LIST=$(ls /proc/ | grep "[0-9]")
+
+# Parcours la liste de processus dans /proc et stocke le PID, le nom 
+# et le PPID dans des variables.
+for i in $LIST; do
+    NAME=$(grep "Name" /proc/$i/status 2>/dev/null | awk -F " " {'print $2'}) 
+    IDP=$(grep "PPid" /proc/$i/status 2>/dev/null |awk -F " " {'print $2'})
+    PID=$(grep -e "^Pid" /proc/$i/status 2>/dev/null |awk -F " " {'print $2'}) 
+    echo "$PID:$IDP:$NAME" >> /tmp/list.csv
+done
+
+#Affiche tout les processus et non seulement ceux de initd
 subtree 0
 
 # Tue le processus voulu (q pour quitter le script)
