@@ -7,7 +7,8 @@ read -p "saisir une commande :" Commande
 
 exec $Commande  | echo ${?} &
 
-
+#AIM : Première fonction asynchrone
+#PARAMS :
 async1()
 {
         sleep 5
@@ -17,6 +18,8 @@ async1()
         return 0
 }
 
+#AIM : Deuxieme fonction asynchrone
+#PARAMS :
 async2()
 {
         sleep 3
@@ -26,16 +29,12 @@ async2()
         return 0
 }
 
+
 echo "En cours"
+## appel des fonctions en tache de fond
 async1 &
 async2 &
 
 
 
 exit 0
-
-
-
-
-
-
