@@ -44,15 +44,19 @@ function subtree ()
 
 subtree 1
 
-#Supprime le fichier temporaire
-rm /tmp/list.csv
-
 # Tue le processus voulu (q pour quitter le script)
+# Si le n° de processus n'existe pas, message d'erreur
 while [[ $REP != "q" ]]; do
     read -p "Quel processus voulez vous tuer ? ("q" pour quitter) : " REP
     if [[ $REP != "q" ]]; then
-        kill $REP
+        RES=$(cat /tmp/list.csv | grep $REP)
+        if [[ $? = 0 ]]; then
+            kill $REP
+        else
+            echo -e "ERREUR : $REP ne correspond à aucun processus"
+        fi
     else
+        rm /tmp/list.csv
         exit
     fi
 done
