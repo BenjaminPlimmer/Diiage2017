@@ -45,4 +45,4 @@ Tree 0
 
 #Suppression du fichier
 
-rem /tmp/process
+rm /tmp/process
