@@ -4,9 +4,10 @@
 #PARAMS: aucun paramètre
 #MODIF:
 
+#Parcours la liste des processus dans /proc
+
 list=$(ls /proc/ | grep"[0-9]")
 
-#Parcours la liste des processus dans /proc
 #Stockage dans des variables du nom, du PPID et du PID
 
 for l in $list; do
@@ -22,12 +23,15 @@ done
 #PARAMS: int pid
 #RETURN:
 
+#Initialisation du niveau 0
+
 currentlevel=0
 
 #Affichage de l'arbre
 
 function Tree()
 {
+   # Récupération des informations contenues dans le fichier
    while IFS=":" read procenfant name procparent
    do
       if [ "$procparent" == "$1" ]; then
@@ -35,6 +39,7 @@ function Tree()
             echo -e -n "|     "
          done
          echo -e "L_____$procenfant($name)"
+         # Gestion du niveau si il existe un processus enfant (augmentation) ou non (diminution)
          currentlevel=$((currentlevel+1))
          Tree $procenfant
          currentlevel=$((currentlevel-1))
