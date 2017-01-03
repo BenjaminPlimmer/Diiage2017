@@ -42,7 +42,7 @@ function subtree ()
     done < /tmp/list.csv
 }
 
-subtree 1
+subtree 0
 
 # Tue le processus voulu (q pour quitter le script)
 # Si le n° de processus n'existe pas, message d'erreur
