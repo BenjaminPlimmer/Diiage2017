@@ -6,15 +6,14 @@
 Exit=0
 while [[ $Exit != 1 ]]
 do
-	read -p "minishell : (press enter to leave) " $Command
+	read -p "minishell : (press enter to leave) " Command
 	if [[ -z "$Command" ]]
 	then
 		Exit=1
 	else
-		$Command
+		$Command $1>/dev/null
 		echo ${?}
 	fi
-
 done
 
 
