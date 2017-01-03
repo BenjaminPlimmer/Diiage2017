@@ -48,4 +48,5 @@ Tree 0
 
 rm /tmp/process
 
-#Fichier /tmp/process est bien créé mais aucune arborescence créée en sortie de commande lorsque le script est lancé
+#Fichier /tmp/process est bien créé mais aucune arborescence créée en sortie de commande
+#lors du lancement du script.
