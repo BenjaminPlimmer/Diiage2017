@@ -23,19 +23,48 @@ function CreateTree
 	done < /tmp/info
 }
 
-File=$(ls /proc/ | grep "[0-9]")
+#AIM : Show tree from file (parent;enfant;name) 
+#PARAMS : [INT] PID 
+function GetTree
+{
+	File=$(ls /proc/ | grep "[0-9]")
 
-#Save pid, ppid and name in file /tmp/info
-#File format pid:ppid:name
-for f in $File
+	#Save pid, ppid and name in file /tmp/info
+	#File format pid:ppid:name
+	for f in $File
+	do
+		Name=$(more /proc/$f/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
+		IdParent=$(more /proc/$f/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'})
+		echo "$f:$IdParent:$Name" >> /tmp/info
+	done
+
+	CurrentLevel=0
+
+	CreateTree 0
+
+	rm /tmp/info
+}
+
+GetTree
+
+Exit=0
+while [[ $Exit != 1 ]]
 do
-	Name=$(more /proc/$f/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
-	IdParent=$(more /proc/$f/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'})
-	echo "$f:$IdParent:$Name" >> /tmp/info
+    read -p "Enter process ID to kill ? : enter to exit" id
+	echo 
+	if [[ -z "$id" ]]
+	then
+		Exit=1
+	else
+		if [ -d "/proc/$id" ]
+		then
+			kill $id
+			GetTree
+		else
+			echo "id unknown"
+		fi
+	fi
+    
 done
 
-CurrentLevel=0
-
-CreateTree 0
-
-rm /tmp/info
+exit 1
