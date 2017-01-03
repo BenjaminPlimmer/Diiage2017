@@ -4,7 +4,7 @@
 #PARAMS: aucun paramètre
 #MODIF:
 
-list=$(ls /proc | grep"[0-9]$")
+list=$(ls /proc/ | grep"[0-9]")
 
 #Parcours la liste des processus dans /proc
 #Stockage dans des variables du nom, du PPID et du PID
