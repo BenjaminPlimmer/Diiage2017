@@ -20,6 +20,8 @@ echo " -----------------------------------------------------------  "
 echo "| Liste des processus -  PPID :      PID :     NAME :       | "
 echo " -----------------------------------------------------------  "
 
+currentlevel=0
+
 function procTree
 {
         # la fonction va creer un arbre en fonction des infos extraites precedemment.
