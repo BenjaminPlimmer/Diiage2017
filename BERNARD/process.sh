@@ -6,7 +6,7 @@
 
 #Parcours la liste des processus dans /proc
 
-list=$(ls /proc/ | grep"[0-9]")
+list=$(ls /proc/ | grep "[0-9]")
 
 #Stockage dans des variables du nom, du PPID et du PID
 
