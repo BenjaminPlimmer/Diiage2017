@@ -13,7 +13,7 @@ for l in $list; do
    name=$(more /proc/$l/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'})
    ppid=$(more /proc/$l/status 2>/dev/null | grep "PPid" | awk -F " " {'print $2'})
    pid=$(more /proc/$l/status 2>/dev/null | grep "Pid" | awk -F " " {'print $2'})
-   echo $l';'$name';'$ppid >>/tmp/process
+   echo $pid';'$name';'$ppid >>/tmp/process
 done
 
 #AIM: Fonction ayant pour but la mise en place d'une arborescence
