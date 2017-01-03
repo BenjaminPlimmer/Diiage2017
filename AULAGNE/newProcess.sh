@@ -40,13 +40,13 @@ function tree
     # Boucle qui va récupérer les infos stockés dans notre fichier temporaire en ommetant les ";"
 	while IFS=";" read pid ppid name
 	do
-	    # Test si l'id de processus parent est égale à l'id du processus en cours
+	    # Test si l'id de processus parent est égale à l'id du processus en cours.
 		if [ "$ppid" == "$1" ]
 		then
-		    #Boucle qui va parcourir les numéros de processus pour afficher leur niveau vis à vis du processu parent.
+		    #Boucle qui va parcourir les numéros de processus enfants vis à vis du processus parent précédent.
 			for (( i=0; i<$CurrentLevel; i++ ))
 			do
-			    # affiche le caractère "|" à chaque niveau actuel.
+			    # affiche le caractère "|      " à chaque niveau actuel en cas de processus enfant lié.
 				echo -e -n "|      "
 			done
 			#affiche le caractère "\-------" ainsi que le pid & nom du processus enfant
