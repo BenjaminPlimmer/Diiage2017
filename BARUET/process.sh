@@ -52,12 +52,12 @@ then
         echo "Fin"
         exit
 else
-kill -9 $kill
+kill -15 $kill
 fi
 
 #while [ $kill -ne "stop" ]
 #   do
-#     kill -9 $kill
+#     kill -15 $kill
 #     read kill
 #   done
 
