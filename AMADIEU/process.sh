@@ -12,10 +12,7 @@ for i in $LIST; do
     NAME=$(more /proc/$i/status 2>/dev/null | grep "Name" | awk -F " " {'print $2'}) 
     IDP=$(more /proc/$i/status 2>/dev/null | grep "PPid" |awk -F " " {'print $2'})
     PID=$(more /proc/$i/status 2>/dev/null | grep -e "^Pid" |awk -F " " {'print $2'}) 
-    echo "$PID:$IDP" >> /tmp/list.csv
-    # if [[ $IDP -eq 0 ]]; then
-    #   echo "$NAME($PID)"
-    # fi
+    echo "$PID:$IDP:$NAME" >> /tmp/list.csv
 done
 
 #AIM : Fonction permettant de faire un arborescence recursive des processus
@@ -24,18 +21,20 @@ done
 #PARAMS : int[FIRST PID] 
 #RETURN : None
 currentlevel=0
+
+# Fix le début de l'arborescence à 1
 root='1'
 echo $root
 # Affiche un arbre à partir du noeud passé en argument
 function subtree ()
 {
-    while IFS=":" read enfant parent
+    while IFS=":" read enfant parent name
     do
         if [[ "$parent" == "$1" ]]; then
             for (( i = 0; i < $currentlevel; i++ )); do
                 echo -e -n "|      "
             done
-            echo -e "└------$enfant"
+            echo -e "└------$enfant($name)"
             currentlevel=$((currentlevel+1))
             subtree $enfant
             currentlevel=$((currentlevel-1))
@@ -47,3 +46,13 @@ subtree 1
 
 #Supprime le fichier temporaire
 rm /tmp/list.csv
+
+# Tue le processus voulu (q pour quitter le script)
+while [[ $REP != "q" ]]; do
+    read -p "Quel processus voulez vous tuer ? ("q" pour quitter) : " REP
+    if [[ $REP != "q" ]]; then
+        kill $REP
+    else
+        exit
+    fi
+done
