@@ -16,6 +16,3 @@ do
           echo ${?}
     fi
 done
-
-#pas de temps d'attente quand la commande est longue
-#un script pour les cmds courtes et un autre pour les longues
