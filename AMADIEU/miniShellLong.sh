@@ -8,15 +8,19 @@
 #PARAMS : string 
 #RETURN : Code d'erreur
 function execute () {
-	$1 >/dev/null
-	echo -e $?
+	$1
+	echo -e "\nRésultat commande '$1' -> $?"
 }
 
 while [[ CMD != "q" ]]; do
 	read -p "miniShell: " CMD
-	if [[ $CMD != "q" ]]; then
-		execute "$CMD" &
+	if [[ -z "$CMD"  ]]; then
+		read -p "miniShell: " CMD
 	else
-		exit
+		if [[ $CMD != "q" ]]; then
+			execute "$CMD" &
+		else
+			exit
+		fi
 	fi
 done
