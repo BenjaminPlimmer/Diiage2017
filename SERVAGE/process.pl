@@ -10,6 +10,11 @@ no warnings 'uninitialized';
 #@PARAMS : None
 #@MODIF : None
 ##Création du fichier temporaire
+if ( -e "/tmp/list.csv" ) {
+        `rm /tmp/liste.csv`;
+}
+`touch /tmp/liste.csv`;
+
 `touch /tmp/liste.csv`;
 
 #AIM : Fonction permettant de remplir un tableau des fichiers  avec un nom numerique d'un repertoire donné
