@@ -10,7 +10,7 @@ do
 
    #Traitement de la variable
    read -p "Votre commande : " cmd
-   $cmd
+   $cmd &
 
    #Affichage du code erreur
    echo ${?}
