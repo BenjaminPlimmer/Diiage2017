@@ -12,7 +12,6 @@ echo -e "quit pour arreter le script "
 function executionAsync {
 $1
  echo -e "$1    code retour : ${?}"
-
 }
 
 Quit=0
@@ -24,11 +23,10 @@ do
         if [[ $Commande == "quit" ]]
         then
                 Quit=1
-        else
-        if [[ $Commande == "help" ]]
+        else if [[ $Commande == "help" ]]
         then
-                echo -e "help pour afficher l'aide"
-                echo -e "quit pour arreter le script"
+                echo -e "Tapez help pour afficher l'aide"
+                echo -e "Tapez quit pour arreter le script"
         else
                 executionAsync "$Commande" &
 
