@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #@AIM : Afficher le code retour d'une commande en background
 #@AUTHORS :
