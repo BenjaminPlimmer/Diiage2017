@@ -11,8 +11,5 @@ do
     $cmd
 
     #Affichage du code erreur
-    if [ $? != "0" ]
-       then
-          echo ${?}
-    fi
+    echo ${?}
 done
