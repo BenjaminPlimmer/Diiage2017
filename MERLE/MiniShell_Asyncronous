@@ -1,0 +1,17 @@
+#!/bin/bash
+#@AIM : création d'un minishell
+# trier par PID, avec les arguments de commande.
+#@AUTHORS :
+#   - Florian MERLE
+#@PARAMS :
+#   - Aucun paramètres
+#@MODIF :
+#	- mettre des commentaires
+#   
+
+while [[ $Commande != "C" ]]
+	do
+		read -p "taper une commande" Commande
+		exec $Commande & > /dev/null | echo ${?}
+		exit 0
+done
