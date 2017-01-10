@@ -16,7 +16,7 @@ function showLine () {
 }
 
 #AIM : Fonction permettant de banir une IP si la ligne est "Failed password" (1 seul mauvais essaie --> BAN)
-#PARAMS : string (Ligne ?|  analyser)
+#PARAMS : string (Ligne à analyser)
 #RETURN : None
 function banIP () {
         MATCH=$(echo "$1" | grep "Failed password")
