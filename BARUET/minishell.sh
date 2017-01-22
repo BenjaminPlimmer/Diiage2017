@@ -6,5 +6,5 @@
 
 echo "Donner nom de processus : "
 read cmd
-$cmd >> /dev/null
+$cmd &>/dev/null
 echo "code retour : " ${?}
