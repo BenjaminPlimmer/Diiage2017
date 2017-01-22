@@ -6,13 +6,13 @@
 
 function ReturnCode
 {
-    $cmd
-    echo ${?}
+   $cmd
+   echo ${?}
 }
 
 while [ cmd != "exit" ]
 do
    #Traitement de la variable
-    read -p "Votre commande : " cmd
-	ReturnCode $cmd &
+   read -p "Votre commande : " cmd
+   ReturnCode $cmd &
 done
