@@ -7,20 +7,30 @@
 #PARAMS : [string] command
 function execute
 {
-		$1 1>/dev/null 
-		echo -e "$1 : ${?}"
+	$1 >/dev/null 2>&1
+	echo -e "\nreturn code for $1 : ${?}"	
 }
+
+#Start script
 
 Exit=0
 while [[ $Exit != 1 ]]
 do
-	read -p "minishell : (press enter to leave) " Command
-	if [[ -z "$Command" ]]
+		
+	read -p "minishell : (type exit to leave)" Command
+	if [[ -z "$Command" ]]; then continue; fi
+	if [[ "$Command" = "exit" ]]
 	then
 		Exit=1
 	else
+		#execute function in background
 		execute "$Command" &
 	fi
 done
+
+#kill all child processes
+kill -- -$$
+
+exit 0
 
 
