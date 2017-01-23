@@ -54,11 +54,3 @@ then
 else
 kill -15 $kill
 fi
-
-#while [ $kill -ne "stop" ]
-#   do
-#     kill -15 $kill
-#     read kill
-#   done
-
-
