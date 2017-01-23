@@ -6,7 +6,7 @@
 
 function codeRetour
 {
-   $cmd 
+   $cmd &
    echo "code retour : " ${?}
 }
 
