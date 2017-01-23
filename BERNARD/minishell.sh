@@ -5,14 +5,14 @@
 #MODIF:
 
 while [ cmd != "exit" ]
-
 do
+	#Traitement de la variable
+    read -p "Votre commande : " cmd
+    $cmd
 
-   #Traitement de la variable
-   read -p "Votre commande : " cmd
-   $cmd
-
-   #Affichage du code erreur
-   echo ${?}
-
+    #Affichage du code erreur
+    if [ $? != "0" ]
+       then
+          echo ${?}
+    fi
 done

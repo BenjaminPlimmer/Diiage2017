@@ -6,8 +6,8 @@
 
 function ReturnCode
 {
-   $cmd &
-   echo ${?}
+    $cmd &
+    echo ${?}
 }
 
 while [ cmd != "exit" ]

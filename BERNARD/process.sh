@@ -52,6 +52,3 @@ Tree 0
 #Suppression du fichier
 
 rm /tmp/process
-
-#Fichier /tmp/process est bien créé mais aucune arborescence créée en sortie de commande
-#lors du lancement du script.
