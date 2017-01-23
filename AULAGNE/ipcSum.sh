@@ -8,4 +8,4 @@
 #PARAMS :
 
 
-ipcs -m|awk '{if ($5 ~ /^[0-9]*/) sum+$5; } END {printf("Taille RAM utilisée: " sum/1048576 "Mo\n")}'
+ipcs|awk '{if ($5 ~ /^[0-9]*/) sum+$5; } END {printf("Taille RAM utilisée: " sum/1048576 "Mo\n")}'
