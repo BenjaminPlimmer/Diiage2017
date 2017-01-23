@@ -52,6 +52,6 @@ then
     #Le script s'arrête
     exit
 else
-	#On kill le process
-	kill $id
+    #On kill le process
+    kill $id
 fi
