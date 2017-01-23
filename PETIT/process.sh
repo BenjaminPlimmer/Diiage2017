@@ -10,7 +10,7 @@ function tree
         # Affichage de l'arbre
         while IFS=":" read id parent nom
         do
-			#Condition sur le parent
+	    #Condition sur le parent
             if [ "$parent" == "$1" ]
             then
                 for (( i=0; i<$currentLevel; i++ ))
@@ -33,7 +33,7 @@ do
     parent=$(grep -w "PPid:" /proc/$i/status 2>/dev/null | awk -F " " {'print $2'})
     nom=$(grep -w "Name:" /proc/$i/status 2>/dev/null| awk -F " " {'print $2'})
 	
-	#Stockage des données dans le fichier tmptree
+    #Stockage des données dans le fichier tmptree
     echo "$i:$parent:$nom" >> /tmp/tmptree	
 done
 
@@ -49,7 +49,7 @@ read -p "Saisir le processus à tuer, sinon <exit> : " id
 #Test si id égal exit
 if [ "$id" == "exit" ]
 then
-	#Le script s'arrête
+    #Le script s'arrête
     exit
 else
 	#On kill le process
