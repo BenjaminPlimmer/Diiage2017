@@ -6,7 +6,7 @@
 
 function ReturnCode
 {
-   $cmd
+   $cmd &
    echo ${?}
 }
 
