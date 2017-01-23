@@ -6,14 +6,16 @@
 Exit=0
 while [[ $Exit != 1 ]]
 do
-	read -p "minishell : (press enter to leave) " Command
-	if [[ -z "$Command" ]]
+	read -p "minishell : (type exit to leave) " Command
+	if [[ "$Command" = "exit" ]]
 	then
 		Exit=1
 	else
-		$Command $1>/dev/null
-		echo ${?}
+		#execute command and redirect all output to /dev/null
+		$Command >/dev/null 2>&1
+		echo "return code" ${?}
 	fi
 done
 
+exit 0
 

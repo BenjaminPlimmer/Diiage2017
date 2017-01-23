@@ -4,15 +4,15 @@
 #PARAMS:
 #MODIF:
 
+function ReturnCode
+{
+   $cmd
+   echo ${?}
+}
+
 while [ cmd != "exit" ]
-
 do
-
    #Traitement de la variable
    read -p "Votre commande : " cmd
-   $cmd
-
-   #Affichage du code erreur
-   echo ${?}
-
+   ReturnCode $cmd &
 done
