@@ -32,3 +32,4 @@ do
                 cmd "$shell" &
 
         fi
+done
