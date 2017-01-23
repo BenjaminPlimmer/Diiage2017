@@ -4,7 +4,7 @@
 # PARAMS  : pas de parametres
 # MODIFS  :
 
-echo "Donner nom de processus : "
+echo "Donner une commande : "
 read cmd
 $cmd
 echo "code retour : " ${?}
