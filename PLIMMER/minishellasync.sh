@@ -7,7 +7,7 @@
 #PARAMS : [string] command
 function execute
 {
-	$1 >/dev/null 2>&1
+	$1
 	echo -e "\nreturn code for $1 : ${?}"	
 }
 
@@ -28,7 +28,7 @@ do
 	fi
 done
 
-#kill all child processes
+#kill all child process
 kill -- -$$
 
 exit 0

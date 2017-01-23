@@ -11,8 +11,7 @@ do
 	then
 		Exit=1
 	else
-		#execute command and redirect all output to /dev/null
-		$Command >/dev/null 2>&1
+		$Command 
 		echo "return code" ${?}
 	fi
 done
