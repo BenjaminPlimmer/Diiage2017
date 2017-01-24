@@ -7,6 +7,7 @@
 #MODIF :
 #27/12/2016 - Modification de la boucle for initiale - récupération des variables dans une tempo.
 #29/12/2016 - Ajout de la fonction d'affichage du résultat de la boucle sous forme d'arbre.
+#24/01/2017 - Ajout de la possibilité de kill un processus actif et ses enfants.
 
 #AIM : Boucle qui recherche les processus présents dans "/proc" , et 
 # stocke les PID,PPID & leur noms dans un fichier temporaire "infoProcess" sous "/tmp".
@@ -63,6 +64,18 @@ function tree
 	done < /tmp/infosprocess
 	
 }
+
+read -p "Donnez le nom du processus a kill :" name
+   
+res=$(grep $name /tmp/infosprocess | awk -F ";" '{print $1}')
+
+	for j in $res
+	do
+		kill $j
+	done	
+	
+echo processus $name kill
+
 #reset de l'arbre.
 tree 0
 
