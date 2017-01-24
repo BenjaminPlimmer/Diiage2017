@@ -30,21 +30,21 @@ function banIP () {
 # Si l'utilisateur demande l'aide
 # Si l'utilisateur se trompe d'event, renvoie : --help pour event
 if [[ $1 = "--help" ]]; then
-	echo "USAGE : $0 <FILE> <EVENT>"
-	echo "EVENT are : access modify close_write close_nowrite close open moved_to moved_from move move_self create delete delete_self unmount";exit
+	echo "USAGE : $0 <FILE>"
+	exit
 fi
 
 # TEST si le fichier passé en paramètre existe ou non
 # S'il n'existe pas affiche l'usage du script + sortie
 if [[ ! -f "$1" ]]; then
         echo -e "Le fichier $1 n'existe pas."
-        echo "USAGE : $0 <FILE> <EVENT>"
+        echo "USAGE : $0 <FILE>"
         exit
 fi
 
 # Passe en valeur les paramètres de l'utilisateur
 FILE="$1"
-while inotifywait -e $2 "$FILE"
+while inotifywait -e "$FILE"
 do
         showLine $FILE
         banIP "$OUT"
