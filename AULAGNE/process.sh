@@ -31,6 +31,8 @@ for i in $Process
 
 #Positionnement au niveau 0 pour l'arbre ( processus père absolu ).
 currentlevel=0
+root="|"
+echo $root
 
 #AIM : Fonction qui crée une arborescence des processus sous forme d'arbre.
 #PARAMS : 
@@ -50,7 +52,7 @@ function tree
 				echo -e -n "|      "
 			done
 			#affiche le caractère "\-------" ainsi que le pid & nom du processus enfant
-			echo -e "\-------$pid($name)"
+			echo -e "+-------$pid($name)"
 			#le niveau augmente en cas de processus enfant.
 			CurrentLevel=$((CurrentLevel+1))
 			
