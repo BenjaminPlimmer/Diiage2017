@@ -84,6 +84,7 @@ function killZombie () {
 				if [[ "$REP" != "q" ]]; then
 					kill $REP
 				else
+					echo "Veuillez relancer le scan."
 					exit
 				fi
 			done
