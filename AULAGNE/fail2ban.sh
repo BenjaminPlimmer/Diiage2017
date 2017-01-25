@@ -2,7 +2,8 @@
 #AIM : Analyse intrusion SSH 
 #AUTHORS :   AULAGNE Jérôme
 #PARAMS : 
-#MODIF : en cours
+#MODIF : 
+#25-01-17 - ajout du script fail2ban.
 
 
 #on stocke la date dans une variable.
