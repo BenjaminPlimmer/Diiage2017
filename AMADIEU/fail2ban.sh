@@ -8,7 +8,6 @@
 
 # Fichier passé en paramètre
 FILE="$1"
-
 #AIM : Fonction permettant d'afficher la dernière ligne du fichier passé en paramètre
 #PARAMS : string 
 #RETURN : Dernière ligne
