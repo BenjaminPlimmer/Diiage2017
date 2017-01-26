@@ -23,13 +23,12 @@ matched="${BASH_REMATCH[1]}"
 #Start script
 
 nb=0
-while read LINE
-do 
-	file=$(awk '$1 ~ /file=+/ {print $1}' actionOnModif.conf)
-	regex=$(grep "regex=" actionOnModif.conf)
-	action=$(grep "action=" actionOnModif.conf)
-	count=$(awk '$1 ~ /count=+/ {print $1}' actionOnModif.conf)
-done < actionOnModi.conf
+#get variables from the configuration file
+file=$(awk '$1 ~ /file=+/ {print $1}' actionOnModif.conf)
+regex=$(grep "regex=" actionOnModif.conf)
+action=$(grep "action=" actionOnModif.conf)
+count=$(awk '$1 ~ /count=+/ {print $1}' actionOnModif.conf)
+
 
 
 file=$(echo "${file/file=/}")
@@ -43,8 +42,10 @@ do
 	getLastLine $file
 
 	matchRegex $regex $last
+	#only perfom the action if event happen the right nomber of times
 	if [ "$nb" == "$count" ]
 	then
+		#replace the variable in the command
 		command=$(echo "${action/match/"$matched"}")
 		$command
 		echo "executed: $command"
