@@ -1,4 +1,19 @@
 #!/bin/bash
+@AIM : Affiche l'état du système par catégorie en fonction des options choisies
+#@AUTHORS : SERVAGE THOMAS
+#@PARAMS : 
+#		-OS
+#		-mem
+#		-net
+#		-ipc
+#		-disk
+#		-proc
+#		-help
+#@MODIF : None
+
+
+
+
 
 function write_header(){
 	local h="$@"
