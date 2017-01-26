@@ -6,6 +6,8 @@
 #@PARAMS : None
 #@MODIF : None
 
+# Fichier passé en paramètre
+FILE="$1"
 
 #AIM : Fonction permettant d'afficher la dernière ligne du fichier passé en paramètre
 #PARAMS : string 
@@ -27,24 +29,38 @@ function banIP () {
         fi
 }
 
+#AIM : Fonction affichant un message d'erreur personnalité passé en paramètre
+#PARAMS : string (message d'erreur)
+#RETURN : Erreur, puis exit
+function printError () {
+        echo "$1"
+        echo "USAGE : $0 <FILE>"
+        echo "--help pour avoir l'aide"
+        exit
+}
+
 # Si l'utilisateur demande l'aide
-# Si l'utilisateur se trompe d'event, renvoie : --help pour event
 if [[ $1 = "--help" ]]; then
+        echo "Analyse les modifications effectué sur un fichier passé en paramètre"
+        echo "Si fichier /var/log/auth.log passé en paramètre, BAN l'IP si connexion SSH invalide"
 	echo "USAGE : $0 <FILE>"
 	exit
 fi
 
-# TEST si le fichier passé en paramètre existe ou non
-# S'il n'existe pas affiche l'usage du script + sortie
+# Test si un fichier à été passé en paramètre
+# Sinon quitte
+if [[ -z "$1" ]]; then
+        printError "Aucun fichier passé en paramètre"
+fi
+
+# Test si le fichier passé en paramètre existe. 
+# Sinon quitte le script.
 if [[ ! -f "$1" ]]; then
-        echo -e "Le fichier $1 n'existe pas."
-        echo "USAGE : $0 <FILE>"
-        exit
+        printError "Le fichier $1 n'existe pas."
 fi
 
 # Passe en valeur les paramètres de l'utilisateur
-FILE="$1"
-while inotifywait -e "$FILE"
+while inotifywait -e modify "$FILE"
 do
         showLine $FILE
         banIP "$OUT"
