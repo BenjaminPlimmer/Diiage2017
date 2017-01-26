@@ -43,16 +43,17 @@ function banSshFailed
    fi
 }
 
-#AIM : Boucle sur les event tant que le fichier de log est modifié.
+#AIM : Boucle qui demande le fichier de log tant que le fichier existe.
 #PARAMS :
-
 while [ -f $Log ]
 read -p "Entrez un fichier de log (si contrôle accès ssh => /var/log/auth.log) :" Log
 do
-
+	#test si le fichier de log existe
 	if [ -f $Log ]
 	then
 	
+	#AIM : Boucle sur les event tant que le fichier de log est modifié et existe.
+	#PARAMS :
 		inotifywait -m -e modify $Log | while read event file
 		do
 			#on affiche que le fichier a été modifié.
@@ -64,6 +65,7 @@ do
 				echo "Tentative d'attaque par ssh"
 				banSshFailed
 			else
+				#affiche la dernière ligne du fichier de log.
 				awk '{ ligne=$0 } END { print ligne }' $Log
 			fi
 	
