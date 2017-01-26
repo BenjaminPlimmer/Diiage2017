@@ -5,7 +5,7 @@
 #@MODIF : 26/01/2017 - Gestion des erreurs
 #@MODIF : 26/01/2017 - Gestion du fichier de config
 
-#AIM : Fonction permettant d'afficher la dernière ligne du fichier saisi.
+#AIM : Fonction permettant d'afficher la dernière ligne du fichier.
 #PARAMS : string 
 #RETURN : Dernière ligne
 function lastline () {
