@@ -73,9 +73,9 @@ function killCPU () {
 	fi
 }
 
-#AIM : Fonction propose de kill des processus zombie sil il y en a si la RAM utlisé est supérieur à 80%
+#AIM : Fonction propose de kill des processus zombie sil il y en a
 #PARAMS : None 
-#RETURN : Affiche 4 top CPU par mémoire utilisé
+#RETURN : Propose de tuer les processus zombie, si le scan en a trouvé
 function killZombie () {
 		read -p "Des processus zombie on été detecté, supprimer les processus ? [y/n] " REP
 		if [[ "$REP" = "y" ]]; then
