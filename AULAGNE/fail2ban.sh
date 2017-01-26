@@ -16,6 +16,7 @@ badCount="2"
 #PARAMS :
 inotifywait -m -e modify /var/log/auth.log | while read event file
 do
+	echo "Fichier modifié"
 	#Si on trouve une ligne avec le mot failed  et ssh on envoi le nombre de tentatives et l'adresse ip dans le fichier temporaire IP-file.
    if (awk '/Failed/ && /ssh/ {x[$(NF-3)]++} END {for (i in x){printf "%1d %s\n", x[i], i}}' /var/log/auth.log| sort -nr ) > /tmp/IP-file;
    then
@@ -28,8 +29,9 @@ do
 		#Si le nombre de tentatives dépasse 2 on bannit l'adresse IP ( DROP )
 		if  [ $count -ge $badCount ]
 		then
-				# On indique dans /var/log/messages que l'on drop une IP
-				echo $date." Drop de l'IP : "$ip >> /var/log/messages;
+				# On indique dans /var/log/messages que l'on drop une IP & on affiche le ban avec l'adresse ip dans le terminal.
+				echo $($date)." Ban IP : "$ip
+				echo $($date)." Drop de l'IP : "$ip >> /var/log/messages;
 				/sbin/iptables -I INPUT -s $ip -j DROP;
 		fi	
    fi
