@@ -1,0 +1,54 @@
+#!/bin/bash
+#@AIM : Détection d'intrusion avec un script bash
+#@AUTHORS : MERLE Florian (avec aide et indication Nicolas Gourillon)
+#PARAMS : none
+#RETURN : none
+
+#Affichage dernière ligne d'un fichier saisi.
+function lastline () {
+        line=$(tail -1 $file)
+        echo "$line"
+}
+
+#Fonction permettant de banir une IP si "Failed password"
+function bannir () {
+        MATCH=$(echo "$line" | grep "Failed password")
+        if [[  $? = 0 ]]; then
+                IP=$(echo "$1" | cut -f 11 -d " ")
+                IP="$IP"
+                iptables -I INPUT -s "$IP" -j DROP
+				echo "Ip à été banni "
+				echo $IP
+		fi
+}
+
+#On test le fichier saisi + affiche un message s'il n'existe pas
+function testt () {
+	if [[ $file = "--help" ]]; then
+		echo "Saisie d'un fichier de log à analyser"
+		exit
+    fi
+	
+	if [[ ! -f "$file" ]]; then
+        echo -e "$file n'existe pas."
+        saisie
+	fi
+}
+
+#Fonction de saisie utilisateur
+function saisie () {
+echo "saisie chemin de notre fichier"
+read file
+}
+
+#Appel function saisie,testfile
+saisie
+testt
+
+#Surveillance de $file via inotifywait
+#Appel des fonctions lastline et ban
+while inotifywait -e modify "$file"
+do
+        lastline
+		ban "$line"
+done
