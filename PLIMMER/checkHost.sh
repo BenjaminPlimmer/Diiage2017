@@ -51,9 +51,9 @@ function GetTree
 function DeleteProcess
 {
 #kill process
-while [[ $Exit != 1 ]]
+while [[ $Kexit != 1 ]]
 do
-    read -p "Enter process ID to kill ? : enter q to exit" id
+    read -p "Enter process ID to kill (type q to exit) ? : " id
 	#check if input is empty
 	if [[ -z "$id" ]]
 	then
@@ -62,7 +62,7 @@ do
 	else
 		if [[ $id = "q" ]]
 		then
-			Exit=1
+			Kexit=1
 		else	
 			#check if id exist
 			if [ -d "/proc/$id" ]
@@ -80,32 +80,57 @@ done
 #PARAMS : none
 function GetBitesIpcs
 {
-ipcs |awk  '$5 ~ /[0-9].*/ {sum+=$5}END {print sum/1024/1024 " MB"}'
+ipcsUsed=$(ipcs |awk  '$5 ~ /[0-9].*/ {sum+=$5}END {print sum/1024/1024 " MB"}')
+echo -e "\n##IPCS##"
+echo "Used"
+echo "$ipcsUsed"
+echo -e "\n##IPCS##"
 }
 
+#AIM : Get Memory Percent from free command
+#PARAMS : none
 function GetMemoryPercent
 {
-freePercent=$(free |awk 'NR==2 {print $4/$2*100}')
-echo "Free memory : $freePercent %"
+totalMemory=$(free -h |awk 'NR==2 {print $2}')
+freeMemoryPercent=$(free |awk 'NR==2 {print $4/$2*100}')
+echo -e "\n##Memory##"
+echo "Total : Free"
+echo "$totalMemory : $freeMemoryPercent %"
+echo -e "##Memory##"
+
 }
 
+#AIM : Get Swap Percent from free command
+#PARAMS : none
 function GetSwapPercent
 {
-freePercent=$(free |awk 'NR==4 {print $4/$2*100}')
-echo "Free swap : $freePercent %"
+totalSwap=$(free -h |awk 'NR==4 {print $2}')
+freeSwapPercent=$(free |awk 'NR==4 {print $4/$2*100}')
+echo -e "\n##SWAP##"
+echo "Total : Free"
+echo "$totalSwap : $freePercent %"
+echo -e "##SWAP##"
 }
 
+#AIM : Get Disk info from df command
+#PARAMS : none
 function GetDiskPercent
 {
-freePercent=$(df |awk ' NR > 1{print $1 " : "  $5}')
-echo $freePercent
+freeDiskPercent=$(df -h |awk ' NR > 1{print $1 " : "  $5 " : " $2}')
+echo -e "\n##Disk usage##"
+echo "$freeDiskPercent"
+echo -e "##Disk usage##"
 }
 
+#AIM : Get top 3 process by memory usage from ps command
+#PARAMS : none
 function GetTopProcessMemory
 {
-aux --sort -rss |awk 'NR < 5 {print $1"\t"$2"\t" $4"\t"$11} '
+ps aux --sort -rss |awk 'NR < 5 {print $1"\t"$2"\t" $4"\t"$11} '
 }
 
+#AIM : Summary of process state from /proc/
+#PARAMS : none
 function ProcessState
 {
 
@@ -147,12 +172,85 @@ do
 	# echo "$f:$IdParent:$Name" >> /tmp/info
 done
 total=$((running+sleeping+stopped+zombie))
+echo -e "\n##Process state"
 echo -e "Total \t Sleeping \t Stopped \t Running \t Zombie"
 echo -e "$total \t $sleeping \t\t $stopped \t\t $running \t\t $zombie"
+echo -e "##Process state"
+}
 
+#AIM : get hostname and ipAddress from ifconfig
+#PARAMS : none
+function HostInfo {
+	echo -e "\n##Hostname##"
+	echo "Fully qualified domain name : $(hostname -f)"
+	ifconfig | awk 'BEGIN { FS = "\n"; RS = "" } { print $1 $2 }' | sed -e 's/ .*inet addr:/:/' -e 's/ .*//'
+	echo -e "##Hostname##"
+}
 
+#AIM : List help with commands to type for minishell
+#PARAMS : none
+function ListCommands {
+echo -e "##Minishell Help##\nEnter any system command\nhinfo (Basic host information)\npstate (Summary of process)"
+echo -e "topp (Top 3 Process by Memory)\ndinfo (Disks info)\nsinfo (Swap info)\nminfo (Memory info)\nipcs (Ipcs info)\nkp (Delete Process)\nGetTree (list all process)"
+echo -e "exit (to leave)"
+}
+
+#AIM : Change enter command to function name
+#PARAMS : [string] command
+function SimplifyCommands {
+	echo $1
+	case "$1" in
+		hinfo)
+			Command="HostInfo"
+			;; 
+		pstate)
+			Command="ProcessState"
+			;;
+		topp)
+			Command="GetTopProcessMemory"
+			;;
+		dinfo)
+			Command="GetDiskPercent"
+			;;
+		sinfo)
+			Command="GetSwapPercent"
+			;;
+		minfo)
+			Command="GetMemoryPercent"
+			;;
+		ipcs)
+			Command="GetBitesIpcs"
+			;;
+		kp)
+			Command="DeleteProcess"
+			;;
+	esac
 }
 
 #Start script
 
+HostInfo
 ProcessState
+GetMemoryPercent
+
+echo "Type --help for mon info"
+Exit=0
+#AIM : minishell , execute command 
+
+while [[ $Exit != 1 ]]
+do
+	read -p "minishell : " Command
+	SimplifyCommands "$Command"
+	#if empty continue
+	if [[ -z "$Command" ]]; then continue; fi
+	#show help
+	if [[ "$Command" = "--help" ]]; then ListCommands ;continue; fi
+	#exit script
+	if [[ "$Command" = "exit" ]]
+	then
+		Exit=1
+	else
+		$Command 
+		if [[ ! ${?} = 0 ]];then echo -e "Incorrect command\nType --help for mon info"; fi
+	fi
+done
