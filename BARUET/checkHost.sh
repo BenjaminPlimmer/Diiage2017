@@ -28,9 +28,12 @@ function CPURAM
    echo "Occupation de la RAM : "
    echo "------------------------ "
    RAMTotale=$(printf '%.*f\n' 1 $(free | awk 'NR==2 {print $2/1048576}'))
-   RAMUsed=  $(printf '%.*f\n' 1 $(free | awk 'NR==2 {print $4/1048576}'))
+   RAMUsed=$(printf '%.*f\n' 1 $(free | awk 'NR==2 {print $4/1048576}'))
    echo " $RAMUsed / $RAMTotale Go"
    echo "------------------------ "
+   echo "Occupation du CPU : "
+   echo "------------------------ "
+   ps -aux | awk 'NR > 1 {cpuSum=+$3} END {print cpuSum "%"}'
 }
 
 function Menu
