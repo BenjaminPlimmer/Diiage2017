@@ -18,6 +18,7 @@ function IpcSum
 
 function GState
 {
+   echo " "
    cat /etc/*-release
    echo "------------------------ "
 }
@@ -34,6 +35,7 @@ function CPURAM
    echo "Occupation du CPU : "
    echo "------------------------ "
    ps -aux | awk 'NR > 1 {cpuSum=+$3} END {print cpuSum "%"}'
+   echo "------------------------ "
 }
 
 function Menu
