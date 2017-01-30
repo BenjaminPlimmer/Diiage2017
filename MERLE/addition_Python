@@ -1,0 +1,3 @@
+def addition (n1, n2):
+	i = n1+n2
+	return i
