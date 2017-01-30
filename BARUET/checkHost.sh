@@ -33,7 +33,7 @@ function CPURAM
    echo "------------------------ "
    echo "Occupation du CPU : "
    echo "------------------------ "
-   ps -aux | awk 'NR > 1 {cpuSum=+$3} END {print cpuSum "%"}'
+   ps -aux | awk 'NR > 1 {cpuSum+=$3} END {print cpuSum "%"}'
 }
 
 function Menu
@@ -102,13 +102,6 @@ function Disk
 
 Menu
 val="1"
-
-
-
-
-
-
-
 while [ "$val" != "stop" ]
    do
       echo " "
