@@ -159,7 +159,7 @@ done
 }
 
 
-
+# Test les paramètres entrés
 if [ $# -eq 0 ]
  then
 	echo "pas d'argument"
