@@ -18,7 +18,6 @@ function IpcSum
 
 function GState
 {
-   echo " "
    cat /etc/*-release
    echo "------------------------ "
 }
@@ -35,7 +34,6 @@ function CPURAM
    echo "Occupation du CPU : "
    echo "------------------------ "
    ps -aux | awk 'NR > 1 {cpuSum=+$3} END {print cpuSum "%"}'
-   echo "------------------------ "
 }
 
 function Menu
@@ -104,47 +102,29 @@ function Disk
 
 Menu
 val="1"
+
+
+
+
+
+
+
 while [ "$val" != "stop" ]
    do
       echo " "
       echo "Donner une valeur :" 
       read val
       echo " "
-      if [ $val == "1"  ]
-         then
-            GState
-         else
-            if [ $val == "2" ]
-               then
-                  procTree
-               else
-                  if [ $val == "3" ]
-                     then
-                        IpcSum
-                     else
-                        if [ $val == "4" ]
-                           then
-                              CPURAM
-                           else
-                              if [ $val == "5" ]
-                                 then
-                                    Disk
-                                 else
-                                    if [ $val == "M" ]
-                                       then
-                                          Menu
-                                       else
-                                          if [ $val == "stop" ]
-                                             then
-                                                exit
-                                             else
-                                                echo "$val n'est pas une valeur comprise dans le menu"
-                                                echo "Veuillez recommencer."
-                                          fi
-                                    fi
-                              fi
-                        fi
-                  fi
-            fi
-      fi
+
+      case $val  in
+         "1") GState ;;
+         "2") procTree ;;
+         "3") IpcSum ;;
+         "4") CPURAM ;;
+         "5") Disk ;;
+         "M") Menu ;;
+         "stop") exit ;;
+         *) echo "$val n'est pas une valeur comprise dans le menu"
+         echo "Veuillez recommencer.";;
+      esac
    done 
