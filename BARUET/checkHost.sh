@@ -72,7 +72,7 @@ function Tree
                Tree $Enfant
                CurrentLevel=$((CurrentLevel-1))
          fi
-      done < /tmp/proc
+      done < /tmp/info
 }
 
 function procTree
@@ -93,7 +93,6 @@ function procTree
    done
    CurrentLevel=0
    Tree 0
-   rm /tmp/proc
 }
 
 function Disk
