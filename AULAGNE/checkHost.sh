@@ -1,13 +1,9 @@
 #!/bin/sh
-#AIM : script qui permet de monitorer un poste de part son utilisation mémoire, disque, CPU
+#AIM : 
 #AUTHORS :   AULAGNE Jérôme
 #PARAMS : 
 #MODIF :
-#24/01/2017 - Création et ajout du script.
 
-
-#AIM: Fonction qui affiche un arbre des processus
-#PARAMS:
 function proc ()
 {
 #AIM : Boucle qui recherche les processus présents dans "/proc" , et 
@@ -72,15 +68,15 @@ tree 0
 rm /tmp/infosprocess
 }
 
-#AIM: Fonction qui affiche la taille de la mémoire utilisée par les ipc.
-#PARAMS:
+#AIM : Fonction qui affiche la somme de mémoire utilisée par les ipc .
+#PARAMS : 
 function ipcSum ()
 {
 	ipcs|awk '{if ($5 ~ /^[0-9]*/) sum+$5; } END {printf("Taille RAM utilisée: " sum/1048576 "Mo\n")}'
 }
 
-#AIM: Fonction qui permet de stopper un processus en cours en supprimant ses processus enfants liés si présent.
-#PARAMS:
+#AIM : Fonction qui kill un processus spécifié et ses parents/enfants auquel cas.
+#PARAMS : 
 function stopProc ()
 {
   Process=$(find /proc -maxdepth 1 -type d -regex ".*[1-9]"| awk -F "/" '{print $3}')
@@ -120,13 +116,18 @@ DISK=$(df -h | awk '$NF=="/"{printf "%s\t\t", $5}')
 CPU=$(top -bn1 | grep load | awk '{printf "%.2f%%\t\t\n", $(NF-2)}')
 echo "$MEMORY$DISK$CPU"
 
-
-	
 	echo " Press q at any moment to quit"		
 	read -p "Que voulez-vous afficher ? ( Processus en cours => process , Mémoire utilisée => mem , Utilisation disque => disque ):" reponse
+	
+	
 
 
+while [ $reponse != "q" ]
+do
 
+    	echo " Press q at any moment to quit"		
+	read -p "Que voulez-vous afficher ? ( Processus en cours => process , Mémoire utilisée => mem , Utilisation disque => disque ):" reponse
+	
 	if [ $reponse == "process" ]
 	then
 		read -p "Voulez-vous affichez l'arbre des processus en cours ?" reponse
@@ -173,7 +174,7 @@ echo "$MEMORY$DISK$CPU"
 	fi
 
 
-
+done
 	  
 
 
