@@ -99,7 +99,7 @@ function Disk
 {
   df -h
 }
-rm /tmp/info
+rm /tmp/info 2>/dev/null
 Menu
 val="1"
 while [ "$val" != "stop" ]
