@@ -1,5 +1,5 @@
 #!/bin/bash
-@AIM : Affiche l'état du système par catégorie en fonction des options choisies
+#@AIM : Affiche l'état du système par catégorie en fonction des options choisies
 #@AUTHORS : SERVAGE THOMAS
 #@PARAMS : 
 #		-OS
