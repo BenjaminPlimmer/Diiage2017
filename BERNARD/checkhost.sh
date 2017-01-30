@@ -66,5 +66,6 @@ function print ()
 }
 
 # Appel des fonctions
+infoComputer
 print
 proc
