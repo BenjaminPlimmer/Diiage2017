@@ -14,19 +14,26 @@
 
 
 
-
+#AIM : Fonction permettant d'afficher un entête pour chaque option
+#PARAMS : None 
+#RETURN : None
 function write_header(){
 	local h="$@"
 	echo "---------------------------------------------------------------"
 	echo "     ${h}"
 	echo "---------------------------------------------------------------"
 }
-
+#AIM : Fonction permettant d'afficher les informations du système 
+#PARAMS : None 
+#RETURN : None
 function os_info()
 {
         write_header " System information "
         echo "Operating system : $(uname -a)"
 }
+#AIM : Fonction permettant d'afficher les informations sur la mémoire utilisée
+#PARAMS : None 
+#RETURN : None
 function mem_info()
 {
         write_header " Free and used memory "
@@ -41,11 +48,19 @@ function mem_info()
     echo "***********************************"
         ps auxf | sort -nr -k 4 | head -5
 }
+
+#AIM : Fonction permettant d'afficher les informations sur les IPCs
+#PARAMS : None 
+#RETURN : None
 function ipc_info()
 {
         write_header " Used memory by IPC "
         ipcs | awk '{ if ($5 ~ /^[0-9]*$/) sum+=$5;}END {print sum/1048576 " Mo"}'
 }
+
+#AIM : Fonction permettant d'afficher les connections entrantes/sortants 
+#PARAMS : None 
+#RETURN : None
 function net_info()
 {
         write_header=$(netstat -i | cut -d" " -f1 | egrep -v "^Kernel|Iface|lo")
@@ -62,13 +77,17 @@ function net_info()
         echo "**************************************"
         netstat -i
 }
-
+#AIM : Fonction permettant d'afficher l'utilisation du disque
+#PARAMS : None 
+#RETURN : None
 function disk_info()
 {
 write_header " Disk information"
 df -h
 }
-
+#AIM : Fonction permettant d'afficher les informations concernant les processus
+#PARAMS : None 
+#RETURN : None
 function proc_info()
 {
 write_header "Process information"
@@ -89,7 +108,9 @@ list_proc
 subtree 0 |more 
 rm /tmp/list.csv
 }
-
+#AIM : Fonction permettant d'afficher l'aide sur l'utilisation du script
+#PARAMS : None 
+#RETURN : None
 function help_info()
 {
 write_header "Help information"
