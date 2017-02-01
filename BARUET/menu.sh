@@ -1,5 +1,5 @@
 #!/bin/bash
-# AIM     : Retrouver un utilisateur, son UID, q pour quitter
+# AIM     : Retrouver un utilisateur, son UID, q pour quitter - sujet Partiel
 # AUTHORS : KEVIN BARUET
 # PARAMS  : Pas de param
 # MODIFS  : 
