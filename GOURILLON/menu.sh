@@ -8,17 +8,18 @@
 #01/02/2017-PARTIEL-Création du script
 #
 
-
+echo "--------------------------------------------"
 echo "Saisisez une valeur pour poursuivre:"
 echo "1: Vérifier l'existence d'un utilisateur"
 echo "2: Connaître l'Uid d'un utilisateur"
 echo "q: Quitter"
-
+echo "--------------------------------------------"
 read value
 
 
 if [ "$value" == "q" ]
 then
+        echo "Vous quittez le script"
         exit
 fi
 
