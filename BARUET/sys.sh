@@ -1,6 +1,5 @@
 #!/bin/bash
-# AIM     : Utiliser les differents scripts crees jusqu'ici pour en faire un global qui nous donne une indication
-#	    sur l'etat du serveur.
+# AIM     : Creer un script qui donne diverses info sur le système - sujet Partiel
 # AUTHORS : Kevin BARUET
 # PARAMS  : Pas de parametre.
 # MODIFS  :
