@@ -1,5 +1,5 @@
 #!/bin/bash
-#@AIM : Export base de données mysql en .zip
+#@AIM : Outil de création de base avec accès utilisateur + fichier de conf
 #@AUTHORS : AMADIEU Romain
 #@PARAMS : None
 #@MODIF : None
