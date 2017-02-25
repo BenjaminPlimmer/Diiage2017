@@ -1,0 +1,87 @@
+#!/bin/bash
+
+##récupérer infos de connexions mysql via fichier séparé
+##(ip, port, admin, taille mini mdp)
+##récupérer les infos de connexion mysql via un fichier de configuration séparé
+ConnectionFile=/root/ConnectionDB.conf
+Temp=1
+if [[ ! -e "$ConnectionFile" ]]
+then
+        echo "il n'y a pas de fichier de configuration pour la connection mysql"
+        echo "vérifiez que $ConnectionFile existe"
+        exit 1
+fi
+
+if [ -e "$ConnectionFile" ]
+then
+
+ServerDB=$(grep "server" $ConnectionFile | awk -F "=" '{print $2}')
+PortDB=$(grep "port" $ConnectionFile | awk -F "=" '{print $2}')
+UserDB=$(grep "user" $ConnectionFile | awk -F "=" '{print $2}')
+PasswordDB=$(grep "password" $ConnectionFile | awk -F "=" '{print $2}')
+fi
+
+
+
+
+###questions a poser :
+while [ $Temp = 1 ]
+do
+	echo "quel est le nom de la bdd a creer ?"
+	read $Db
+	Temp=0
+	for i in $(mysqlshow -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB")
+	do
+		echo $i
+		if [ "$Db" == "$i" ]
+		then
+			Temp=1
+			echo " erreur : la bdd $Bd existe !"
+		fi
+	done
+done
+
+
+Temp=1
+while [ $Temp = 1 ]
+do
+	echo "quel est le nom de l'utilisateur autorisé a utiliser la bdd ?"
+	read $User
+	for i in $(echo "select user from mysql.user;" | mysql -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB")
+	do
+		echo $i
+		if ( "$User" == "$i" )
+		then
+		Temp=0
+		fi
+	done
+	if [ $Temp = 1 ]
+	then
+		echo "l'utilisateur n'existe pas"
+	fi
+done
+
+
+
+echo "Quel est le mdp du user ?"
+
+read -s $Mdp
+
+
+
+echo "quel est ladresse ip origine de l'utilisateur"
+read $Ip
+
+if [[ $Ip =~ ^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\.[0-9]{3} ]]
+then
+
+	echo "oui"
+	## créer la bdd en fonction des résultats
+	echo "CREATE DATABASE $Db;GRANT ALL PRIVILEGES ON $DB TO '$User'@'$Ip' IDENTIFIED BY '$Mdp';Flush PRIVILEGES;" | mysql -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB"
+else
+	echo " pas une adresse IP valide"
+
+fi
+exit 0
+
+

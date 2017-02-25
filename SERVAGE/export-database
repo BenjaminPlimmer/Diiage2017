@@ -1,0 +1,69 @@
+#!/bin/bash
+
+DirectoryBackup=/backup
+ConnectionFile=/root/ConnectionDB.conf
+if [ "$#" -ne 1 ] 
+then 
+	echo " missing DBNNAME"
+	exit 1
+fi
+
+DBNameParam=$(echo $1)
+
+
+
+##récupérer les infos de connexion mysql via un fichier de configuration séparé
+if [[ ! -e "$ConnectionFile" ]]
+then
+	echo "il n'y a pas de fichier de configuration pour la connection mysql"
+	echo "vérifiez que $ConnectionFile existe"
+	exit 1
+fi
+
+if [ -e "$ConnectionFile" ]
+then
+
+ServerDB=$(grep "server" $ConnectionFile | awk -F "=" '{print $2}')
+PortDB=$(grep "port" $ConnectionFile | awk -F "=" '{print $2}')
+UserDB=$(grep "user" $ConnectionFile | awk -F "=" '{print $2}')
+PasswordDB=$(grep "password" $ConnectionFile | awk -F "=" '{print $2}')
+fi
+
+
+##si n'existe pas repertoire dump, mkdir
+
+if [ ! -e "$DirectoryBackup" ]
+then
+	echo "le répertoire $DirectoryBackup nexiste pas création..."
+	mkdir /backup
+	echo "le repertoire est créé mais il n'y a pas de dump"
+	exit 1
+fi
+
+##nom du dump  avec la date  ( date)
+
+Date=$(date -I)
+File=$DBNameParam"_"$Date".sql"
+mysqldump -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB" --database $DBNameParam  > "$DirectoryBackup"/"$File"
+
+##demander utilisateur qeul compressage ( zip ou tar.gz
+
+echo " choisir le type de compression"
+echo " 1 - compression en .tar.gz"
+echo " 2 - compression en .zip"
+
+read $Choice
+
+if [ "$Choice"="1" ]
+then
+echo "choix 1"
+gzip -v "$DirectoryBackup"/"$File"
+
+fi
+if [ "$Choice"="2" ]
+then
+echo "choix 2"
+zip "$DirectoryBackup"/"$File"
+rm "$DirectoryBackup"/"$File"
+fi
+exit 0

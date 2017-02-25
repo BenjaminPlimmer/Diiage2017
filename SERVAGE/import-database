@@ -1,0 +1,91 @@
+#!/bin/bash
+
+
+if [[ "$#" -ne 2 ]]
+then
+	echo "il manque un/des paramètre"
+	exit 1
+fi
+
+DBNameParam=$(echo $2)
+
+##vérifier que le param est bien une date valide type xx/xx/xxxx
+
+if [[ $1 =~ ^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$ ]]
+then
+	DumpDateParam=$(echo $1)
+
+else
+	echo "$1 n'est pas une date valide"
+	echo "la date doit etre de type XXXX-XX-XX"
+	exit 1
+fi
+ConnectionFile=/root/ConnectionDB.conf
+DirectoryBackup=/backup
+
+
+##recuperer confiugration client mysql via fichier de conf séparé
+
+if [ ! -e "$ConnectionFile" ]
+then
+	echo "le fichier $ConnectionFile n'existe pas"
+	exit 1
+fi
+
+if [ -e "$ConnectionFile" ]
+then
+	ServerDB=$(grep "server" $ConnectionFile | awk -F "=" '{print $2}')
+	PortDB=$(grep "port" $ConnectionFile | awk -F "=" '{print $2}')
+	UserDB=$(grep "user" $ConnectionFile | awk -F "=" '{print $2}')
+	PasswordDB=$(grep "password" $ConnectionFile | awk -F "=" '{print $2}')
+fi
+
+
+if [ ! -e "$DirectoryBackup" ]
+then
+	echo "le répertoire $DirectoryBackup n'existe pas"
+	exit 1
+fi
+
+DumpFile=$DBNameParam"_"$DumpDateParam
+echo $DumpFile
+
+for i in $(find $DirectoryBackup -iregex ^"$DumpFile".[a-z])
+do
+echo $i
+
+##recherche des fichier correspondants dans répertoire dump
+ #  dbname-date.compress
+
+##si fichier = .sql alors
+	if [ $i ~= ".sql" ]
+	then
+##mysql -u <user> -p <dbname> < export.sql
+		mysql -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB" < $i
+	fi
+
+
+##si fichier = .tar.gz alors
+	if [ $i ~= ".gz" ]
+	then
+##décompresser
+##mysql -u <user> -p <dbname> < export.sql
+		mysql -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB" < gunzip $i
+	fi
+##si fichier = .zip alors
+	if [ $i ~= ".zip" ]
+	then
+##décompresser
+##mysql -u <user> -p <dbname> < export.sql
+		mysql -h "$ServerDB" --port "$PortDB" -u "$UserDB" -p"$PasswordDB" < unzip $i
+	fi
+
+##sinon pas de dump
+
+done
+
+
+
+
+exit 0
+
