@@ -8,5 +8,5 @@
 #   - None
 
 read -p "taper une commande" Commande
-exec $Commande|echo ${?}
+exec $Command & echo ${?}
 exit 0
